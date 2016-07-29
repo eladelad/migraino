@@ -14,11 +14,12 @@ router.post('/', function(req, res, next){
     var cur_date = new Date();
     var documentJson = {
         user: {
-            id: "test_id"
+            id: "uir5a5nxm1"
         },
         migraine: req.body
     };
     documentJson.migraine.time = cur_date.getHours();
+    documentJson.migraine.level = "high";
     documentJson.date = cur_date.toISOString();
     elastic.addDocument(documentJson, "migraine", indexName).then(function (result, error) {
         console.log("Error: " + error);

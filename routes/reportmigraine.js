@@ -18,6 +18,7 @@ router.post('/', function(req, res, next){
         },
         migraine: req.body
     };
+    documentJson.migraine.time = cur_date.getHours();
     documentJson.date = cur_date.toISOString();
     elastic.addDocument(documentJson, "migraine", indexName).then(function (result, error) {
         console.log("Error: " + error);

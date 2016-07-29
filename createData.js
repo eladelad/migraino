@@ -75,8 +75,8 @@ function reportMigraine(user){
     var documentJson = {
         user: user,
         migraine: {
-            level: "high",
-            time: "randTime"
+            level: "low",
+            time: randTime
         }
     }
     documentJson.date = cur_date;
@@ -87,12 +87,12 @@ function reportMigraine(user){
     });
 }
 
-for(var i = 0; i < 30; i++) {
+for(var i = 0; i < 37; i++) {
  createUser();
 }
 
 
-for(var i = 0; i < 50; i++) {
+for(var i = 0; i < 300; i++) {
         var userIndex = Math.floor(Math.random() * users.length)
         reportMigraine(users[userIndex]);
     }

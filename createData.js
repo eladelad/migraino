@@ -5,7 +5,7 @@
 
 var initial = true;
 
-var cures = ["Drink Coke", "Eat Vegetables", "Sleep More", "Don't Over Sleep", "Meditate", "Walk", "Drink Coffee"];
+var cures = ["Drink Coke", "Eat Vegetables", "Sleep More", "Meditate", "Walk", "Drink Coffee"];
 var elastic = require('./es_client');
 var users = [];
 
@@ -26,11 +26,11 @@ function createUser(){
     };
     users.push(user);
     console.log(user);
-    //elastic.addDocument(user, "user", "users", user.id).then(function (error, result) {
-    //    if (!error) {
-    //        console.log(user);
-    //    }
-    //});
+    elastic.addDocument(user, "user", "users", user.id).then(function (error, result) {
+        if (!error) {
+            console.log(user);
+        }
+    });
 }
 
 function makeCures(){
@@ -71,10 +71,15 @@ function reportMigraine(user){
     indexTime = indexTime.substring(0, indexTime.indexOf('T'));
     var indexName = 'migraino-' + indexTime;
     var cur_date = new Date();
+    var randTime = Math.floor((Math.random() * 24) + 1)
     var documentJson = {
         user: user,
-        migraine: req.body.migraine
+        migraine: {
+            level: "high",
+            time: "randTime"
+        }
     }
+    documentJson.date = cur_date;
     elastic.addDocument(documentJson, "migraine", indexName).then(function (result, error) {
         console.log("Error: " + error);
         console.log("Result: " + result);
@@ -82,7 +87,7 @@ function reportMigraine(user){
     });
 }
 
-for(var i = 0; i < 5; i++) {
+for(var i = 0; i < 30; i++) {
  createUser();
 }
 

@@ -12,12 +12,13 @@ router.get('/', function(req, res, next) {
 var elastic = require('../es_client');
 
 router.post('/', function(req, res, next){
+    var documentJson = req.body;
     var indexTime = new Date().toISOString();
     indexTime = indexTime.substring(0, indexTime.indexOf('T'));
     var indexName = 'migraino-' + indexTime;
     var cur_date = new Date();
-    document.date = cur_date.toISOString();
-    elastic.addDocument(req.body, "event", indexName).then(function (error, result) {
+    documentJson.date = cur_date.toISOString();
+    elastic.addDocument(documentJson, "event", indexName).then(function (error, result) {
         res.json(result);
     });
 });

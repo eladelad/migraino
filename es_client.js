@@ -6,6 +6,9 @@ var elasticClient = new elasticsearch.Client({
     port: '80'
 });
 
+var Promise = require('promise');
+var debug = false;
+
 //elasticClient.ping({
 //  requestTimeout: 30000,
 //  // undocumented params are appended to the query string
@@ -18,18 +21,39 @@ var elasticClient = new elasticsearch.Client({
 //  }
 //});
 
-function addDocument(document) {
-    var indexTime = new Date().toISOString();
-    indexTime = indexTime.substring(0, indexTime.indexOf('T'));
-    var indexName = 'migraino-' + indexTime;
-    var cur_date = new Date();
-    document.date = cur_date.toISOString();
-    console.log(indexName);
-    console.log(document);
-    return elasticClient.index({
+function addDocument(document, type, indexName, id) {
+    var documentJson = {
         index: indexName,
-        type: "document",
+        type: type,
         body: document
-    });
+    };
+    if (id) { documentJson.id = id; }
+    if (debug){
+        console.log(documentJson);
+        return new Promise(function (resolve, reject) {
+            resolve("hello");
+        });
+    }
+    return elasticClient.index(documentJson);
 }
 exports.addDocument = addDocument;
+
+function updateDocument(document, type, indexName, id){
+    if (!id) { return false }
+    var documentJson = {
+        index: indexName,
+        type: type,
+        body: {
+            doc: document
+        }
+    };
+    if (debug){
+        console.log(documentJson);
+        return new Promise(function (resolve, reject) {
+            resolve("hello");
+        });
+    }
+    return elasticClient.update(documentJson)
+}
+
+exports.updateDocument = updateDocument;

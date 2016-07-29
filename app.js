@@ -9,6 +9,9 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var wh = require('./routes/wh');
 var sswh = require('./routes/ss-wh');
+var events = require('./routes/events');
+var registration = require('./routes/registration');
+var reportcure = require('./routes/reportcure');
 
 var app = express();
 
@@ -28,6 +31,10 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/wh', wh);
 app.use('/ss-wh', sswh);
+app.use('/registration', registration);
+app.use('/reportcure', reportcure);
+app.use('/events', events);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

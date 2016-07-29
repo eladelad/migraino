@@ -13,12 +13,16 @@ router.post('/', function(req, res, next){
         var user = req.body.user;
         user.cure = []
         elastic.addDocument(user, "user", "users", user.id).then(function (error, result) {
-        res.json(result);
-    });
-    }
-    console.log("Registration started");
-    register.registerEvents(user.token);
+            res.json(result);
+        });
+        if (!user.test){
+            console.log("Registration started");
+            register.registerEvents(user.token);
+        }
 
+
+
+    }
 });
 
 module.exports = router;

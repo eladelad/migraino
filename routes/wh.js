@@ -23,37 +23,35 @@ router.post('/', function(req, res, next){
 });
 
 
-function sendRequest(req, endpoint, token, callback){
-
-    var googleKey = req.app.get("googleKey");
-
-    var request = require("request")
-    var neuraAPI = "https://wapi.theneura.com/v1/" + endpoint;
-    var requestData = {
-        "hello": "hello"
-    };
-
-    var request = require("request")
-    //console.log("Making request to " + googleAPI)
-    request({
-        headers: {
-            'Authorization': 'Bearer' + token
-        },
-        url: neuraAPI,
-        method: "POST",
-        json: requestData
-    }, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            if(body.hasOwnProperty('status')) {
-                callback(true);
-            } else {
-                callback(false);
-            }
-        } else {
-            // Error handle required
-            callback(false);
-        }
-    })
-}
+//function sendRequest(req, endpoint, token, callback){
+//
+//    var request = require("request")
+//    var neuraAPI = "https://wapi.theneura.com/v1/" + endpoint;
+//    var requestData = {
+//        "hello": "hello"
+//    };
+//
+//    var request = require("request")
+//
+//    request({
+//        headers: {
+//            'Authorization': 'Bearer' + token
+//        },
+//        url: neuraAPI,
+//        method: "POST",
+//        json: requestData
+//    }, function (error, response, body) {
+//        if (!error && response.statusCode === 200) {
+//            if(body.hasOwnProperty('status')) {
+//                callback(true);
+//            } else {
+//                callback(false);
+//            }
+//        } else {
+//            // Error handle required
+//            callback(false);
+//        }
+//    })
+//}
 
 module.exports = router;

@@ -4,10 +4,23 @@
 var express = require('express');
 var router = express.Router();
 
-router.post('/', function(req, res, next){
-
-    console.log(req.body)
-        res.json(req.body);
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
 });
 
+var elastic = require('../es_client');
+
+router.post('/', function(req, res, next){
+    var indexTime = new Date().toISOString();
+    indexTime = indexTime.substring(0, indexTime.indexOf('T'));
+    var indexName = 'migraino-' + indexTime;
+    var cur_date = new Date();
+    document.date = cur_date.toISOString();
+    elastic.addDocument(req.body, "event", indexName).then(function (error, result) {
+        res.json(result);
+    });
+});
 module.exports = router;
+
+

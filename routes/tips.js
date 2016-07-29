@@ -9,16 +9,15 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next){
-    var cur_date = new Date().toISOString();
-    var events = { events: [
-         { date: cur_date, name: "test" },
-         { date: cur_date, name: "test2" }
+    var tips = { tips: [
+         { type: "Drink", name: "Cola" },
+         { type: "Do Activity", name: "Running" }
 
     ]
 
     }
     console.log(req.body)
-        res.json(events);
+        res.json(tips);
 });
 
 module.exports = router;
